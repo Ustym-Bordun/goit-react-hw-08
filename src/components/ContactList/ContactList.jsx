@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import {
   selectAddingNewContact,
   selectFilteredContacts,
-} from '../../redux/contactsSlice';
+} from '../../redux/contacts/selectors';
 
 import Contact from '../Contact/Contact';
 import { AddingContactLoader } from '../Loaders/Loaders';

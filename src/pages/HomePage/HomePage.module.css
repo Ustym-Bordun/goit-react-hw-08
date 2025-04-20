@@ -1,0 +1,14 @@
+.wrapper {
+  padding: 30px 0;
+}
+
+.text {
+  font-size: 18px;
+
+  text-align: center;
+}
+.text.wellcome {
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 20px;
+}

@@ -4,8 +4,7 @@ import * as Yup from 'yup';
 import { nanoid } from 'nanoid';
 
 import { useDispatch } from 'react-redux';
-// import { addContact } from '../../redux/contactsSlice';
-import { addContact } from '../../redux/contactsOps';
+import { addContact } from '../../redux/contacts/operations';
 
 import css from './ContactForm.module.css';
 
@@ -44,7 +43,7 @@ const ContactForm = () => {
         }}
         validationSchema={formSchema}
       >
-        <Form className={css.form}>
+        <Form className={css.form} autoComplete="off">
           <div className={css.inputsPart}>
             <div className={css.wrapper}>
               <label className={css.label} htmlFor={`name-${formId}`}>

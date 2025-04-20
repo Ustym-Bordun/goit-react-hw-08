@@ -1,74 +1,32 @@
-import { useEffect } from 'react';
+import { lazy } from 'react';
+import { Route, Routes } from 'react-router';
 
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  selectContacts,
-  selectLoading,
-  selectError,
-  selectFilteredContacts,
-} from '../redux/contactsSlice';
-import { selectNameFilter } from '../redux/filtersSlice';
+import Layout from '../components/Layout/Layout';
 
-import { fetchContacts } from '../redux/contactsOps';
+const HomePage = lazy(() => import('../pages/HomePage/HomePage'));
+const RegistrationPage = lazy(
+  () => import('../pages/RegistrationPage/RegistrationPage')
+);
+const LoginPage = lazy(() => import('../pages/LoginPage/LoginPage'));
+const ContactsPage = lazy(() => import('../pages/ContactsPage/ContactsPage'));
 
-import css from './App.module.css';
-
-import Container from '../components/Container/Container';
-import Section from '../components/Section/Section';
-
-import Heading from '../components/Heading/Heading';
-import ContactForm from '../components/ContactForm/ContactForm';
-import SearchBox from '../components/SearchBox/SearchBox';
-import ContactList from '../components/ContactList/ContactList';
-import Notification from '../components/Notification/Notification';
-import { MainLoader } from '../components/Loaders/Loaders';
-import ErrorMessage from '../components/ErrorMessage/ErrorMessage';
+// import css from './App.module.css';
 
 function App() {
-  const contacts = useSelector(selectContacts);
-  const filter = useSelector(selectNameFilter);
-  const visibleContacts = useSelector(selectFilteredContacts);
-
-  const isLoading = useSelector(selectLoading);
-  const error = useSelector(selectError);
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchContacts());
-  }, [dispatch]);
-
   return (
-    <Section>
-      <Container>
-        <div className={css.wrapper}>
-          <Heading title="Phonebook" bottom />
+    <>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/contacts" element={<ContactsPage />} />
 
-          <ContactForm />
+          <Route path="/register" element={<RegistrationPage />} />
+          <Route path="/login" element={<LoginPage />} />
 
-          <SearchBox />
-
-          {error ? (
-            <ErrorMessage text={error} />
-          ) : isLoading ? (
-            <MainLoader />
-          ) : contacts.length > 0 ? (
-            visibleContacts.length > 0 ? (
-              <ContactList />
-            ) : (
-              <Notification
-                text={`No contacts by this filter:`}
-                addedText={filter}
-              />
-            )
-          ) : (
-            <>
-              <Notification text="You don't have any contacts saved" />
-            </>
-          )}
-        </div>
-      </Container>
-    </Section>
+          {/* <Route path="*" element={<NotFoundPage />} /> */}
+        </Routes>
+      </Layout>
+    </>
   );
 }
 

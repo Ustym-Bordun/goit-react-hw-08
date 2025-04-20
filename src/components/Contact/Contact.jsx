@@ -1,9 +1,9 @@
 import { FaPhone, FaUser } from 'react-icons/fa6';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteContact } from '../../redux/contactsOps';
+import { deleteContact } from '../../redux/contacts/operations';
 
-import { selectDeletingContactId } from '../../redux/contactsSlice';
+import { selectDeletingContactId } from '../../redux/contacts/selectors';
 
 import { DeletingContactLoader } from '../Loaders/Loaders';
 
