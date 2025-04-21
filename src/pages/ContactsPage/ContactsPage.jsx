@@ -11,7 +11,7 @@ import {
 } from '../../redux/contacts/selectors';
 import { selectNameFilter } from '../../redux/filters/selectors';
 
-// import { fetchContacts } from '../../redux/contacts/operations';
+import { fetchContacts } from '../../redux/contacts/operations';
 
 import Container from '../../components/Container/Container';
 import Section from '../../components/Section/Section';
@@ -36,7 +36,7 @@ const ContactsPage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // dispatch(fetchContacts());
+    dispatch(fetchContacts());
   }, [dispatch]);
 
   return (

@@ -1,84 +1,77 @@
-import { Field, Form, Formik } from 'formik';
-import { nanoid } from 'nanoid';
-
-import { useDispatch } from 'react-redux';
-import { register } from '../../redux/auth/operations';
-
 import Container from '../../components/Container/Container';
 import Section from '../../components/Section/Section';
 
+import RegistrationForm from '../../components/RegistrationForm/RegistrationForm';
+
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  selectAuthError,
+  selectIsAuthLoading,
+} from '../../redux/auth/selectors';
+
+import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
+
+import { useEffect } from 'react';
+import { AuthLoader } from '../../components/Loaders/Loaders';
+
+import { smartErrorElimination } from '../../redux/auth/operations';
+
 import css from './RegistrationPage.module.css';
 
-const initialValues = { name: '', email: '', password: '' };
-
 const RegistrationPage = () => {
-  const formId = nanoid();
   const dispatch = useDispatch();
 
-  const handleSubmit = (values, actions) => {
-    dispatch(
-      register({
-        name: values.name,
-        email: values.email,
-        password: values.password,
-      })
-    );
+  const authError = useSelector(selectAuthError);
+  const isAuthLoading = useSelector(selectIsAuthLoading);
 
-    actions.resetForm();
-  };
+  useEffect(() => {
+    dispatch(smartErrorElimination());
+  }, [dispatch]);
+
+  const isEmailValidationError =
+    authError &&
+    authError._message === 'User validation failed' &&
+    authError.errors &&
+    authError.errors.email;
+
+  const isEmailAlreadyRegistered =
+    authError && authError.keyPattern && authError.keyPattern.email === 1;
+
+  const shouldShowGenericError =
+    authError &&
+    authError._message &&
+    !isEmailValidationError &&
+    !isEmailAlreadyRegistered;
 
   return (
     <>
       <Section>
         <Container>
           <div className={css.wrapper}>
-            <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-              <Form className={css.form} autoComplete="off">
-                <div className={css.inputsPart}>
-                  <div className={css.labelFieldWrapper}>
-                    <label className={css.label} htmlFor={`name-${formId}`}>
-                      Name :
-                    </label>
-                    <Field
-                      className={css.input}
-                      type="text"
-                      name="name"
-                      id={`name-${formId}`}
-                    ></Field>
-                  </div>
-                  <div className={css.labelFieldWrapper}>
-                    <label className={css.label} htmlFor={`email-${formId}`}>
-                      Email :
-                    </label>
-                    <Field
-                      className={css.input}
-                      type="email"
-                      name="email"
-                      id={`email-${formId}`}
-                    ></Field>
-                  </div>
+            <RegistrationForm />
 
-                  <div className={css.labelFieldWrapper}>
-                    <label
-                      className={css.label}
-                      htmlFor={`password-${formId}`}
-                    >
-                      Password :
-                    </label>
-                    <Field
-                      className={css.input}
-                      type="text"
-                      name="password"
-                      id={`password-${formId}`}
-                    ></Field>
-                  </div>
-                </div>
+            {isAuthLoading && (
+              <div className={css.registeringWrapper}>
+                <p className={css.registeringText}>
+                  Registering your account.
+                </p>
+                <AuthLoader />
+              </div>
+            )}
 
-                <button className={css.btn} type="submit">
-                  Register
-                </button>
-              </Form>
-            </Formik>
+            {isEmailValidationError && (
+              <ErrorMessage
+                text={`This email: ${authError.errors.email.properties.value} is not valid.`}
+              />
+            )}
+            {isEmailAlreadyRegistered && (
+              <ErrorMessage
+                text={`This email: ${authError.keyValue.email} is already registered.`}
+              />
+            )}
+            {shouldShowGenericError && (
+              <ErrorMessage text={`${authError._message}.`} />
+            )}
           </div>
         </Container>
       </Section>

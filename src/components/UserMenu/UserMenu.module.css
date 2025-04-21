@@ -9,6 +9,7 @@
   font-size: 24px;
   font-weight: 600;
 }
+
 .btn {
   display: flex;
   align-items: center;
@@ -26,6 +27,9 @@
   transition:
     background-color 250ms ease-in-out,
     border-color 250ms ease-in-out;
+}
+.btn:disabled {
+  background-color: rgba(0, 128, 255, 0.25);
 }
 
 .btn:hover,

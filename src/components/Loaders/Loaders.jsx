@@ -1,4 +1,11 @@
-import { BeatLoader, GridLoader, HashLoader, PacmanLoader } from 'react-spinners';
+import {
+  BeatLoader,
+  GridLoader,
+  HashLoader,
+  PacmanLoader,
+  PropagateLoader,
+  PuffLoader,
+} from 'react-spinners';
 import css from './Loaders.module.css';
 
 export const MainLoader = () => {
@@ -47,7 +54,31 @@ export const DeletingContactLoader = () => {
 export const AddingContactLoader = () => {
   return (
     <div className={css.addingContactLoaderwrapper}>
-      <HashLoader color="rgb(46, 170, 104)" size={50} speedMultiplier={1.45} />
+      <HashLoader
+        color="rgb(46, 170, 104)"
+        size={50}
+        speedMultiplier={1.45}
+      />
+    </div>
+  );
+};
+
+export const AuthLoader = () => {
+  return (
+    <div className={css.authLoaderwrapper}>
+      <PropagateLoader
+        color="rgb(58, 212, 130)"
+        size={25}
+        speedMultiplier={1.2}
+      />
+    </div>
+  );
+};
+
+export const RefreshingPageLoader = () => {
+  return (
+    <div className={css.refreshingPageLoaderwrapper}>
+      <PuffLoader color="rgb(242, 239, 65)" size={100} />
     </div>
   );
 };

@@ -26,3 +26,16 @@
   border-radius: 10px;
   background-color: rgba(29, 29, 29, 0.85);
 }
+
+.authLoaderwrapper {
+  display: flex;
+
+  min-height: 25px;
+  margin-left: calc(50% - 12.5px);
+}
+
+.refreshingPageLoaderwrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

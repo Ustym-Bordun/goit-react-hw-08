@@ -1,22 +1,27 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../redux/auth/operations';
+import { selectIsAuthLoading, selectUser } from '../../redux/auth/selectors';
 
 import css from './UserMenu.module.css';
-import { selectUser } from '../../redux/auth/selectors';
 
 const UserMenu = () => {
   const dispatch = useDispatch();
-
-  const handleClick = () => {
+  const handleLogout = () => {
     dispatch(logout());
   };
 
   const { name } = useSelector(selectUser);
+  const isAuthLoading = useSelector(selectIsAuthLoading);
 
   return (
     <div className={css.wrapper}>
       <div className={css.text}>Hallo {name}</div>
-      <button className={css.btn} type="button" onClick={handleClick}>
+      <button
+        className={css.btn}
+        type="button"
+        onClick={handleLogout}
+        disabled={isAuthLoading}
+      >
         Log out
       </button>
     </div>

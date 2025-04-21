@@ -1,0 +1,14 @@
+.loaderWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  gap: 20px;
+
+  height: 100vh;
+}
+.text {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 600;
+}

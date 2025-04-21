@@ -1,6 +1,5 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-
 import { nanoid } from 'nanoid';
 
 import { useDispatch } from 'react-redux';
@@ -43,7 +42,10 @@ const ContactForm = () => {
         }}
         validationSchema={formSchema}
       >
-        <Form className={css.form} autoComplete="off">
+        <Form
+          className={css.form}
+          // autoComplete="off"
+        >
           <div className={css.inputsPart}>
             <div className={css.wrapper}>
               <label className={css.label} htmlFor={`name-${formId}`}>

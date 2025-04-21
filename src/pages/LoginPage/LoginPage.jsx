@@ -1,69 +1,56 @@
-import { Field, Form, Formik } from 'formik';
-import { nanoid } from 'nanoid';
-
-import { useDispatch } from 'react-redux';
-import { login } from '../../redux/auth/operations';
-
 import Container from '../../components/Container/Container';
 import Section from '../../components/Section/Section';
 
+import LoginForm from '../../components/LoginForm/LoginForm';
+
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  selectAuthError,
+  selectIsAuthLoading,
+} from '../../redux/auth/selectors';
+
+import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
+
+import { useEffect } from 'react';
+import { AuthLoader } from '../../components/Loaders/Loaders';
+
+import { smartErrorElimination } from '../../redux/auth/operations';
+
 import css from './LoginPage.module.css';
 
-const initialValues = { email: '', password: '' };
-
 const LoginPage = () => {
-  const formId = nanoid();
-
   const dispatch = useDispatch();
 
-  const handleSubmit = (values, actions) => {
-    dispatch(
-      login({
-        email: values.email,
-        password: values.password,
-      })
-    );
+  const authError = useSelector(selectAuthError);
+  const isAuthLoading = useSelector(selectIsAuthLoading);
 
-    actions.resetForm();
-  };
+  useEffect(() => {
+    dispatch(smartErrorElimination());
+  }, [dispatch]);
+
   return (
     <>
       <Section>
         <Container>
           <div className={css.wrapper}>
-            <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-              <Form className={css.form} autoComplete="off">
-                <div className={css.inputsPart}>
-                  <div className={css.labelFieldWrapper}>
-                    <label className={css.label} htmlFor={`email-${formId}`}>
-                      Email :
-                    </label>
-                    <Field
-                      className={css.input}
-                      type="email"
-                      name="email"
-                      id={`email-${formId}`}
-                    />
-                  </div>
-                  <div className={css.labelFieldWrapper}>
-                    <label
-                      className={css.label}
-                      htmlFor={`password-${formId}`}
-                    >
-                      Password :
-                    </label>
-                    <Field
-                      className={css.input}
-                      type="text"
-                      name="password"
-                      id={`password-${formId}`}
-                    />
-                  </div>
-                </div>
+            <LoginForm />
 
-                <button className={css.btn}>Log in</button>
-              </Form>
-            </Formik>
+            {isAuthLoading && (
+              <div className={css.loggingWrapper}>
+                <p className={css.loggingText}>Logging into your account.</p>
+                <AuthLoader />
+              </div>
+            )}
+
+            {authError && typeof authError === 'string' ? (
+              <ErrorMessage text={authError} />
+            ) : (
+              authError && (
+                <ErrorMessage
+                  text={'Your email or password is not correct.'}
+                />
+              )
+            )}
           </div>
         </Container>
       </Section>
