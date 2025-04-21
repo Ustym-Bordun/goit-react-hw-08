@@ -1,5 +1,5 @@
 import { lazy, useEffect } from 'react';
-import { Route, Routes } from 'react-router';
+import { Navigate, Route, Routes } from 'react-router';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { refreshUser } from '../redux/auth/operations';
@@ -67,7 +67,8 @@ function App() {
                 />
               }
             />
-            {/* <Route path="*" element={<NotFoundPage />} /> */}
+
+            <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </Layout>
       )}

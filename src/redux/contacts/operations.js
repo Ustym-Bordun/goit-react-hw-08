@@ -1,13 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-// ? Old api
-// axios.defaults.baseURL = 'https://67f83d452466325443ec3844.mockapi.io/';
-
-// fetchContacts  get    /contacts
-// addContact     post   /contacts
-// deleteContact  delete /contacts/:id
-
 // ? New api
 axios.defaults.baseURL = 'https://connections-api.goit.global/';
 

@@ -1,3 +1,5 @@
+import clsx from 'clsx';
+
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../redux/auth/selectors';
 
@@ -7,11 +9,8 @@ import Container from '../../components/Container/Container';
 import Heading from '../../components/Heading/Heading';
 
 import css from './HomePage.module.css';
-import clsx from 'clsx';
 
 const HomePage = () => {
-  // const isLoggedIn = useSelector(selectIsLoggedIn);
-
   const { name } = useSelector(selectUser);
   return (
     <div className={css.wrapper}>
